@@ -74,18 +74,16 @@ class SpanConversionSpec extends WordSpec with Matchers {
       convert(clientSpan).remoteEndpoint() shouldBe null
     }
 
-    "omit error tag if request is successful" in {
-      val kamonSpan = newSpan().hasError(false).build()
-      val zipkinSpan = convert(kamonSpan)
+    "omit error tag" in {
+      val kamonSpanOk = newSpan().hasError(false).build()
+      val zipkinSpanOk = convert(kamonSpanOk)
 
-      zipkinSpan.tags().get(Span.TagKeys.Error) shouldBe null
-    }
+      zipkinSpanOk.tags().get(Span.TagKeys.Error) shouldBe null
 
-    "include error tag if request failed" in {
-      val kamonSpan = newSpan().hasError(true).build()
-      val zipkinSpan = convert(kamonSpan)
+      val kamonSpanNotOk = newSpan().hasError(true).build()
+      val zipkinSpanNotOk = convert(kamonSpanNotOk)
 
-      zipkinSpan.tags().get(Span.TagKeys.Error) shouldBe "true"
+      zipkinSpanNotOk.tags().get(Span.TagKeys.Error) shouldBe null
     }
   }
 
