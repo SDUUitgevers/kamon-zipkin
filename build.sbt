@@ -1,4 +1,4 @@
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.1"
 resolvers += Resolver.mavenLocal
 resolvers += Resolver.bintrayRepo("kamon-io", "snapshots")
 
